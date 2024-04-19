@@ -33,10 +33,16 @@ let capsEntries = entries.map((entry) => [
 ]);
 sequelize.models = Object.fromEntries(capsEntries);
 
-const { User, Notification } = sequelize.models;
+const { User, Notification, Record, Category } = sequelize.models;
 
 User.belongsToMany(Notification, { through: "user_notification" });
 Notification.belongsToMany(User, { through: "user_notification" });
+
+User.belongsToMany(Category, { through : "user_category" })
+Category.belongsToMany(User, { through : "user_category" });
+
+User.belongsToMany(Record, { through: "user_record" })
+Record.belongsToMany(User, { through: "user_record" })
 
 module.exports = {
   ...sequelize.models,

@@ -1,9 +1,14 @@
 const {Router} = require('express')
 const getUsersHandler = require('../handlers/getUsersHandler')
+const getNotificationsHandler = require('../handlers/getNotificationsHandler')
+const getCategoriesHandler = require("../handlers/getCategoriesHandler");
 
 
 const router = Router()
 
-router.get('/', getUsersHandler)
+router.get('/users', getUsersHandler)
+router.get('/notifications', getNotificationsHandler);
+router.get("/categories", getCategoriesHandler);
+
 
 module.exports = router;
