@@ -16,25 +16,48 @@ export default function FormNotification() {
   const [userContainer, setUserContainer] = useState([])
   const [notificationContainer, setNotificationContainer] = useState([])
   const [categoryContainer, setCategoryContainer] = useState([])
-  const [all, setAll] = useState(false)
 
   function handleUsers(e){
-    const user = e.target.value
+    const user = e.target.value;
     if(user === 'all'){
-      setAll(true)
       setUserContainer([])
-      console.log(body.map((item) => item.name))
+      setNotificationContainer([]);
+      setCategoryContainer([]);
       setUserContainer(body.map((item) => item.name))
     } else {
-      if(!all){
-        const [add] = body.filter((item) => item.id.toString() === user)
-        setUserContainer([...userContainer, add.name])
-      } else {
-        alert("No puedes agregar mas usuarios")
-      }
+      setUserContainer([]);
+      const [add] = body.filter((item) => item.id.toString() === user);
+      setUserContainer([add.name]);
+      const arrayCategories = add.categories.map((item) => item.name);
+      const arrayNotifications = add.notifications.map((item) => item.name);
+      setNotificationContainer(arrayNotifications);
+      setCategoryContainer(arrayCategories);
     }
   }
 
+  function handleNotifications(e){
+    const type = e.target.value
+    const [add] = listNotif.filter((item) => item.id === parseInt(type))
+    !notificationContainer.includes(add.name) && setNotificationContainer([...notificationContainer, add.name]);
+  }
+  
+  function handleCategory(e){
+    const category = e.target.value
+    const [add] = listCategory.filter((item) => item.id === parseInt(category));
+    !categoryContainer.includes(add.name) && setCategoryContainer([...categoryContainer, add.name]);
+  }
+
+  function handleDelete(e, type){
+    const id = e.target.id
+    type === 'User' && setUserContainer(userContainer.filter((item) => item !== id))
+    type === 'Notification' && setNotificationContainer(notificationContainer.filter((item) => item !== id))
+    type === 'Category' && setCategoryContainer(categoryContainer.filter((item) => item !== id))
+  }
+
+  function handleSubmit(e){
+    console.log('aqui enviaremos los datos por el metodo post')
+    e.preventDefault()
+  }
   
   useEffect(()=>{
     async function getData() {
@@ -61,19 +84,17 @@ export default function FormNotification() {
   return (
     <div className="flex flex-col justify-center items-center bg-purple-500 w-4/6">
       <h3>Send Notification</h3>
-      <form className="flex flex-col justify-center items-center w-full">
+      <form onSubmit={handleSubmit} className="flex flex-col justify-center items-center w-full">
         <div className="flex justify-between w-full">
           <Select data={listUsers} type={"User"} callback={handleUsers} />
-          <Select data={listNotif} type={"Notificaton"} />
-          <Select data={listCategory} type={"Category"} />
+          <Select data={listNotif} type={"Notificaton"} callback={handleNotifications}/>
+          <Select data={listCategory} type={"Category"} callback={handleCategory}/>
         </div>
-
         <div className="w-full flex justify-between">
-          <Container info={userContainer} type={'User'}/>
-          {/* <Container />
-          <Container /> */}
+          <Container info={userContainer} type={"User"} callback={handleDelete}/>
+          <Container info={notificationContainer} type={"Notification"} callback={handleDelete}/>
+          <Container info={categoryContainer} type={'Category'} callback={handleDelete}/>
         </div>
-
         <textarea name="" id="" cols="50" rows="5"></textarea>
         <button>Send</button>
       </form>
