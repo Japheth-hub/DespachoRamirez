@@ -6,7 +6,7 @@ import Select from '../select/select';
 import Container from '../containers/container';
 const URL = process.env.URL_BACK;
 
-export default function FormNotification() {
+export default function FormNotification({callback}) {
   
   // console.log('aqui esta la url', URL)
   const [body, setBody] = useState([])
@@ -59,22 +59,42 @@ export default function FormNotification() {
     setText(e.target.value)
   }
 
-  function handleSubmit(e){
+  async function handleSubmit(e){
     e.preventDefault()
-    let users = []
-    if(userContainer.length === 1){
-      users = body.filter((item) => item.name === userContainer[0])
-    } else {
-      const allUsers = []
-      for(let user of userContainer){
-        allUsers.push(body.filter((item) => item.name === user)[0])
-      }
-      users = allUsers
+    const arrayUsersId = []
+    for(let user of userContainer){
+      const element = listUsers.filter((item) => item.name === user)[0]
+      arrayUsersId.push(element)
     }
-    console.log(users)
-    console.log(notificationContainer)
-    console.log(categoryContainer)
-    console.log(text)
+    const reqBody = {
+      users: arrayUsersId.map((item) => item.id),
+      notifications : notificationContainer,
+      categories : categoryContainer,
+      message : text
+    }  
+    if(userContainer.length === 0){
+      alert('Selecciona el/los usuario(s) para enviar la notificacion')
+      return
+    }  
+    if(notificationContainer.length === 0){
+      alert('Selecciona una Notificacion')
+      return
+    }
+    if(categoryContainer.length === 0){
+      alert('Selecciona una Categoria')
+      return
+    }
+    if(text.length === 0){
+      alert('No hay mensaje para enviar')
+      return
+    }
+    try {
+      const { data } = await axios.post(`http://localhost:3001`, reqBody)
+      console.log(data)
+      callback()
+    } catch (error) {
+      console.log(error)
+    }
   }
   
   useEffect(()=>{

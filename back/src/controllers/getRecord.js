@@ -5,7 +5,8 @@ module.exports = async function getRecord(){
     const data = await Record.findAll({
       include : [
         {model: User}
-      ]
+      ],
+      order: [['id', 'DESC']]
     })
 
     const clearData = data.map((item) => {
@@ -22,8 +23,6 @@ module.exports = async function getRecord(){
         })
       }
     })
-
-    console.log(clearData)
     return clearData
   } catch (error) {
     console.log(error)
