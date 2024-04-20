@@ -3,11 +3,11 @@ module.exports = (sequelize) => {
   sequelize.define("Record",
     {
       notifications: {
-        type: DataTypes.STRING,
+        type: DataTypes.ARRAY(DataTypes.STRING),
         allowNull: false,
       },
       categories: {
-        type: DataTypes.STRING,
+        type: DataTypes.ARRAY(DataTypes.STRING),
         allowNull: false,
       },
       message: {
@@ -15,5 +15,6 @@ module.exports = (sequelize) => {
         allowNull: false
       }
     },
+    {timestamps : false}
   );
 };
