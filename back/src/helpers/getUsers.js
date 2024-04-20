@@ -12,7 +12,7 @@ module.exports = async function getUsers() {
         where: { email: user.email },
         defaults: {
           name: user.name,
-          phone: user.phone.slice(0, 10),
+          phone: user.phone.split(' ')[0]
         },
       });
 
