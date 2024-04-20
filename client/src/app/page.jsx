@@ -1,3 +1,4 @@
+'use client'
 import FormNotification from "@/components/formNotification/formNotification"
 import TableRegisters from "@/components/historyRegister/tableRegisters"
 
