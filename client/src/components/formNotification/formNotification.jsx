@@ -16,6 +16,7 @@ export default function FormNotification() {
   const [userContainer, setUserContainer] = useState([])
   const [notificationContainer, setNotificationContainer] = useState([])
   const [categoryContainer, setCategoryContainer] = useState([])
+  const [text, setText] = useState("")
 
   function handleUsers(e){
     const user = e.target.value;
@@ -54,9 +55,26 @@ export default function FormNotification() {
     type === 'Category' && setCategoryContainer(categoryContainer.filter((item) => item !== id))
   }
 
+  function handleTextarea(e){
+    setText(e.target.value)
+  }
+
   function handleSubmit(e){
-    console.log('aqui enviaremos los datos por el metodo post')
     e.preventDefault()
+    let users = []
+    if(userContainer.length === 1){
+      users = body.filter((item) => item.name === userContainer[0])
+    } else {
+      const allUsers = []
+      for(let user of userContainer){
+        allUsers.push(body.filter((item) => item.name === user)[0])
+      }
+      users = allUsers
+    }
+    console.log(users)
+    console.log(notificationContainer)
+    console.log(categoryContainer)
+    console.log(text)
   }
   
   useEffect(()=>{
@@ -81,6 +99,8 @@ export default function FormNotification() {
     getData()
   }, [])
 
+
+
   return (
     <div className="flex flex-col justify-center items-center bg-purple-500 w-4/6">
       <h3>Send Notification</h3>
@@ -95,7 +115,7 @@ export default function FormNotification() {
           <Container info={notificationContainer} type={"Notification"} callback={handleDelete}/>
           <Container info={categoryContainer} type={'Category'} callback={handleDelete}/>
         </div>
-        <textarea name="" id="" cols="50" rows="5"></textarea>
+        <textarea placeholder='Escribe tu mensaje aqui...' cols="50" rows="5" onChange={handleTextarea} value={text}></textarea>
         <button>Send</button>
       </form>
     </div>
