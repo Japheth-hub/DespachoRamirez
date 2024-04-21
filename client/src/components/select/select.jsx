@@ -1,8 +1,9 @@
 import React from 'react'
+import '@/app/globals.css'
 
 export default function Select({data, type, callback}) {
   return (
-    <select name={type} defaultValue='default' onChange={callback}>
+    <select className='select' name={type} defaultValue='default' onChange={callback}>
             <option value="default" disabled>Select {type}</option>
             {type === 'User' && <option value="all">Select All</option>}
             {data && data.length > 0 

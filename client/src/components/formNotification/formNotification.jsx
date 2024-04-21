@@ -4,6 +4,7 @@ import axios from 'axios'
 import { useState, useEffect } from "react";
 import Select from '../select/select';
 import Container from '../containers/container';
+import style from './formNotification.module.css'
 const URL = process.env.URL_BACK;
 
 export default function FormNotification({callback}) {
@@ -90,8 +91,12 @@ export default function FormNotification({callback}) {
     }
     try {
       const { data } = await axios.post(`http://localhost:3001`, reqBody)
-      console.log(data)
+      alert(data.message)
       callback()
+      setNotificationContainer([])
+      setCategoryContainer([])
+      setUserContainer([])
+      setText("")
     } catch (error) {
       console.log(error)
     }
@@ -122,21 +127,21 @@ export default function FormNotification({callback}) {
 
 
   return (
-    <div className="flex flex-col justify-center items-center bg-purple-500 w-4/6">
-      <h3>Send Notification</h3>
-      <form onSubmit={handleSubmit} className="flex flex-col justify-center items-center w-full">
-        <div className="flex justify-between w-full">
+    <div className={style.formNotification}>
+      <h3 className={style.h3}>Send Notification</h3>
+      <form onSubmit={handleSubmit} className={style.form}>
+        <div className={`grid grid-cols-3 ${style.divGrid}`}>
           <Select data={listUsers} type={"User"} callback={handleUsers} />
           <Select data={listNotif} type={"Notificaton"} callback={handleNotifications}/>
           <Select data={listCategory} type={"Category"} callback={handleCategory}/>
         </div>
-        <div className="w-full flex justify-between">
+        <div className={`grid grid-cols-3 ${style.divGrid}`}>
           <Container info={userContainer} type={"User"} callback={handleDelete}/>
           <Container info={notificationContainer} type={"Notification"} callback={handleDelete}/>
           <Container info={categoryContainer} type={'Category'} callback={handleDelete}/>
         </div>
-        <textarea placeholder='Escribe tu mensaje aqui...' cols="50" rows="5" onChange={handleTextarea} value={text}></textarea>
-        <button>Send</button>
+        <textarea className={style.textarea} placeholder='Escribe tu mensaje aqui...' cols="50" rows="5" onChange={handleTextarea} value={text}></textarea>
+        <button className={`py-1 px-4 m-3 font-bold ${style.btn}`}>Send</button>
       </form>
     </div>
   );

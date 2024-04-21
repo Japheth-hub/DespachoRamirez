@@ -1,0 +1,13 @@
+.table{
+  border: 1px solid black;
+  box-shadow: 0px 0px 10px black;
+}
+.trh{
+  background-color: black;
+  color: white;
+  border-bottom: 1px solid black;
+}
+.trd{
+  border-bottom: 1px solid black;
+  text-align: center;
+}

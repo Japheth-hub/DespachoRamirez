@@ -1,6 +1,8 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import style from './tableRegisters.module.css'
+import '@/app/globals.css'
 const URL = process.env.URL_BACK
 
 export default function TableRegisters({update}) {
@@ -20,13 +22,13 @@ export default function TableRegisters({update}) {
   }, [update])
 
   return (
-    <div>
-      <table>
+    <div className='my-3 mx-auto'>
+      <table className={`mx-auto w-11/12 ${style.table}`}>
         <thead>
-          <tr>
+          <tr className={style.trh}>
             <th>User</th>
-            <th>email</th>
-            <th>phone</th>
+            <th>Email</th>
+            <th>Phone</th>
             <th>Notifications</th>
             <th>Categories</th>
             <th>Message</th>
@@ -36,9 +38,9 @@ export default function TableRegisters({update}) {
           {info && info.length > 0
           ? info.map((item, i) => {
             return item.users.map((user, index) => {
-              let color = i % 2 === 0 ? 'red' : 'orange' 
+              let bg = i % 2 === 0 ? 'white' : '#bbb' 
               return (
-                <tr key={index} style={{backgroundColor:color}} >
+                <tr className={style.trd} key={index} style={{backgroundColor:bg}} >
                   <td>{user.name}</td>
                   <td>{user.email}</td>
                   <td>{user.phone}</td>
