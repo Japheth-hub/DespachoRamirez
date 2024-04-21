@@ -33,7 +33,7 @@ export default function FormNotification({callback}) {
       const arrayCategories = add.categories.map((item) => item.name);
       const arrayNotifications = add.notifications.map((item) => item.name);
       setNotificationContainer(arrayNotifications);
-      setCategoryContainer(arrayCategories);
+      setCategoryContainer([arrayCategories[0]]);
     }
   }
 
@@ -46,7 +46,7 @@ export default function FormNotification({callback}) {
   function handleCategory(e){
     const category = e.target.value
     const [add] = listCategory.filter((item) => item.id === parseInt(category));
-    !categoryContainer.includes(add.name) && setCategoryContainer([...categoryContainer, add.name]);
+    !categoryContainer.includes(add.name) && setCategoryContainer([add.name]);
   }
 
   function handleDelete(e, type){
@@ -64,15 +64,17 @@ export default function FormNotification({callback}) {
     e.preventDefault()
     const arrayUsersId = []
     for(let user of userContainer){
-      const element = listUsers.filter((item) => item.name === user)[0]
+      const element = body.filter((item) => item.name === user)[0]
       arrayUsersId.push(element)
     }
     const reqBody = {
+      phone: arrayUsersId.map((item) => item.phone),
+      emails: arrayUsersId.map((item) => item.email),
       users: arrayUsersId.map((item) => item.id),
       notifications : notificationContainer,
       categories : categoryContainer,
       message : text
-    }  
+    } 
     if(userContainer.length === 0){
       alert('Selecciona el/los usuario(s) para enviar la notificacion')
       return
