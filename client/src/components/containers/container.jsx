@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import '@/app/globals.css'
 
-export default function Container({info, type, callback}) {
-
-  // console.log('esta es la data' , info)
+export default function Container({info, type}) {
 
   const [data, setData] = useState([])
 
@@ -19,7 +17,6 @@ export default function Container({info, type, callback}) {
         return (
           <div key={index} className='bg-white rounded-md w-4/5 flex justify-around'>
             <span>{item}</span>
-            <span className='font-bold text-red-700 text-xl close' id={item} onClick={(e) => { callback(e, type) }}>X</span>
           </div>
         )
       })

@@ -20,12 +20,12 @@ module.exports = async function getUsers() {
         const notifications = await Notification.findOne({where : {id : randoom}})
         const notifications2 = await Notification.findOne({where : {id : randoom2}})
         const categories = await Category.findOne({where : {id : randoom}});
-        const categories2 = await Category.findOne({where : {id : randoom2}});
+        // const categories2 = await Category.findOne({where : {id : randoom2}});
         
         await userDB.addNotification(notifications);
         await userDB.addNotification(notifications2);
         await userDB.addCategory(categories);
-        await userDB.addCategory(categories2);
+        // await userDB.addCategory(categories2);
       }
 
 

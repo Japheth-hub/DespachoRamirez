@@ -1,4 +1,4 @@
-const { User, Notification, Category } = require("../db");
+const { User, Notification, Category, Record } = require("../db");
 
 module.exports = async function getUsers(id){
   try {
@@ -7,7 +7,8 @@ module.exports = async function getUsers(id){
       const users = await User.findAll({
         include: [
           { model: Notification },
-          { model: Category }
+          { model: Category },
+          { model: Record },
         ],
       });
       const clearData = users.map((item) => {
@@ -16,6 +17,7 @@ module.exports = async function getUsers(id){
           name: item.name,
           email: item.email,
           phone: item.phone,
+          records: item.Records,
           notifications: item.Notifications.map((element) => {
             return {
               id : element.id, 

@@ -44,14 +44,14 @@ export default function TableRegisters({update}) {
                   <td>{user.name}</td>
                   <td>{user.email}</td>
                   <td>{user.phone}</td>
-                  <td>{item.notifications.join(' / ')}</td>
+                  <td>{user.channel.join(' / ')}</td>
                   <td>{item.categories.join(' / ')}</td>
                   <td>{item.message}</td>
                 </tr>
               )
             })
           })
-          : <tr><td colSpan={6}>No hay datos por mostrar</td></tr>
+          : <tr><td colSpan={6} className='text-4xl text-center font-bold py-3'>No hay datos por mostrar</td></tr>
         }
         </tbody>
       </table>

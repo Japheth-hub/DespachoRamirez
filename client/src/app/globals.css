@@ -24,4 +24,5 @@
 td, th{
   max-width: 300px;
   border-right: 1px solid black;
+  word-wrap: break-word;
 }
