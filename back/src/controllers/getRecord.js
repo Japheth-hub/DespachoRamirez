@@ -21,7 +21,8 @@ module.exports = async function getRecord(){
             phone : user.phone,
             channel : user.Notifications.map((type) => type.name)
           }
-        })
+        }),
+        created: item.createdAt
       }
     })
     return clearData

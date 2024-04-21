@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import style from './tableRegisters.module.css'
 import '@/app/globals.css'
-const URL = process.env.URL_BACK
+const URL = process.env.NEXT_PUBLIC_URL
 
 export default function TableRegisters({update}) {
 
@@ -12,7 +12,7 @@ export default function TableRegisters({update}) {
   useEffect(() => {
     async function saveData() {
       try {
-        const { data } = await axios(`http://localhost:3001/record`)
+        const { data } = await axios(`${URL}record`)
         setInfo(data)
       } catch (error) {
         console.log(error)
@@ -29,9 +29,11 @@ export default function TableRegisters({update}) {
             <th>User</th>
             <th>Email</th>
             <th>Phone</th>
-            <th>Notifications</th>
-            <th>Categories</th>
+            <th>Channels</th>
+            <th>Category</th>
             <th>Message</th>
+            <th>Date Sent</th>
+            <th>Hour</th>
           </tr>
         </thead>
         <tbody>
@@ -47,6 +49,8 @@ export default function TableRegisters({update}) {
                   <td>{user.channel.join(' / ')}</td>
                   <td>{item.categories.join(' / ')}</td>
                   <td>{item.message}</td>
+                  <td>{item.created.slice(0, 10)}</td>
+                  <td>{item.created.slice(11, 16)}</td>
                 </tr>
               )
             })

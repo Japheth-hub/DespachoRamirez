@@ -6,8 +6,10 @@ module.exports = async function getUsers() {
     const { data } = await axios("https://jsonplaceholder.typicode.com/users");
     
     data.map(async (user) => {
-      const randoom = Math.ceil(Math.random() * 3);
-      const randoom2 = Math.ceil(Math.random() * 3);
+      const notif1 = Math.ceil(Math.random() * 3);
+      const notif2 = Math.ceil(Math.random() * 3);
+      const category1 = Math.ceil(Math.random() * 3);
+      const category2 = Math.ceil(Math.random() * 3);
       const [userDB, created] = await User.findOrCreate({
         where: { email: user.email },
         defaults: {
@@ -17,15 +19,15 @@ module.exports = async function getUsers() {
       });
 
       if(created){
-        const notifications = await Notification.findOne({where : {id : randoom}})
-        const notifications2 = await Notification.findOne({where : {id : randoom2}})
-        const categories = await Category.findOne({where : {id : randoom}});
-        // const categories2 = await Category.findOne({where : {id : randoom2}});
+        const notifications = await Notification.findOne({where : {id : notif1}})
+        const notifications2 = await Notification.findOne({where : {id : notif2}})
+        const categories = await Category.findOne({where : {id : category1}});
+        const categories2 = await Category.findOne({where : {id : category2}});
         
         await userDB.addNotification(notifications);
         await userDB.addNotification(notifications2);
         await userDB.addCategory(categories);
-        // await userDB.addCategory(categories2);
+        await userDB.addCategory(categories2);
       }
 
 

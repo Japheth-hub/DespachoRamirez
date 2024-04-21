@@ -5,11 +5,10 @@ import { useState, useEffect } from "react";
 import Select from '../select/select';
 import Container from '../containers/container';
 import style from './formNotification.module.css'
-const URL = process.env.URL_BACK;
+const URL = process.env.NEXT_PUBLIC_URL;
 
 export default function FormNotification({callback}) {
   
-  // console.log('aqui esta la url', URL)
   const [body, setBody] = useState([])
   const [listCategory, setListCategory] = useState([])
   const [userContainer, setUserContainer] = useState([])
@@ -49,7 +48,7 @@ export default function FormNotification({callback}) {
       return
     }
     try {
-      const { data } = await axios.post(`http://localhost:3001`, reqBody)
+      const { data } = await axios.post(`${URL}`, reqBody)
       alert(data.message)
       callback()
       setUserContainer([])
@@ -62,9 +61,9 @@ export default function FormNotification({callback}) {
   useEffect(()=>{
     async function getData() {
       try {
-        const { data } = await axios(`http://localhost:3001/users`);
+        const { data } = await axios(`${URL}users`);
         setBody(data)
-        const categories = await axios(`http://localhost:3001/categories`);
+        const categories = await axios(`${URL}categories`);
         setListCategory(categories.data);
       } catch (error) {}
     }
