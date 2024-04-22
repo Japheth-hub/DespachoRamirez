@@ -55,7 +55,7 @@ export default function TableRegisters({update}) {
               )
             })
           })
-          : <tr><td colSpan={6} className='text-4xl text-center font-bold py-3'>No hay datos por mostrar</td></tr>
+          : <tr><td colSpan={8} className='text-4xl text-center font-bold py-3'>No hay datos por mostrar</td></tr>
         }
         </tbody>
       </table>
